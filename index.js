@@ -18,7 +18,37 @@ class Tree{
   delete(value){
     this.root = deleteValue(this.root, value)
   }
- 
+
+  find(value){
+   let node = this.root
+
+   while(node != null){
+    if(node.data == value){
+      console.log("found")
+      return node
+    }else if(node.data < value){
+      node = node.right
+    }else{
+      node = node.left
+    }
+   } console.log("not found")
+    return null;
+ }
+
+ levelOrder(callback){
+  if(!callback){throw new Error ("callback is required")}
+
+  let queue = [];
+  queue.push(this.root)
+  while(queue.length != 0){
+    const node = queue.shift()
+    if (node != null) {
+    callback(node)
+    if(node.right != null)queue.push(node.right)
+    if(node.left != null)queue.push(node.left)}
+    
+  } 
+}
 }
 
 function deleteValue(root, value){
@@ -95,7 +125,14 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
   };
 
+  let result = [];
+  function displayNodes(node){ 
+    result.push(node.data);
+  }
+
   const tree = new Tree([9,8,8,5,4,3,2]);
-  tree.delete(3)
+  tree.find(3)
+  tree.levelOrder(displayNodes)
+  console.log(result)
   prettyPrint(tree.root)
  
