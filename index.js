@@ -49,7 +49,48 @@ class Tree{
     
   } 
 }
+
+preOrder(callback){
+  if(!callback){throw new Error ("callback is required")}
+ 
+  function traverse(node){
+    if (node === null) return
+    callback(node)
+    traverse(node.left)
+    traverse(node.right)
+  }
+
+  traverse(this.root)
 }
+
+inOrder(callback){
+  if(!callback){throw new Error ("callback is required")}
+ 
+  function traverse(node){
+    if (node === null) return
+    traverse(node.left)
+    callback(node)
+    traverse(node.right)
+  }
+
+  traverse(this.root)
+}
+
+postOrder(callback){
+  if(!callback){throw new Error ("callback is required")}
+ 
+  function traverse(node){
+    if (node === null) return
+    traverse(node.left)
+    traverse(node.right)
+    callback(node)
+  }
+
+  traverse(this.root)
+}
+}
+
+
 
 function deleteValue(root, value){
    if (root == null) return root;
@@ -132,7 +173,8 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
   const tree = new Tree([9,8,8,5,4,3,2]);
   tree.find(3)
-  tree.levelOrder(displayNodes)
+  
+  tree.inOrder(displayNodes)
   console.log(result)
   prettyPrint(tree.root)
  
